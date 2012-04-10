@@ -3,7 +3,7 @@
 
 var express =  require('express');
 var app = express.createServer();
-var store  = new express.session.MemoryStore;
+
 var FACEBOOK_APP_ID = 'id';
 var FACEBOOK_APP_SECRET = 'secret';
 //Authentication. (Passport)
@@ -32,7 +32,7 @@ app.configure(function(){
   app.use(express.methodOverride());
   app.use(express.bodyParser()); 
   app.use(express.cookieParser());  
-  app.use(express.session({ secret: 'keyboard cat', store: store }));
+  app.use(express.session({ secret: 'keyboard cat' }));
   app.use(passport.initialize());
   app.use(passport.session());  
    app.use(app.router);

@@ -4,6 +4,8 @@
 var express =  require('express');
 var app = express.createServer();
 var store  = new express.session.MemoryStore;
+var FACEBOOK_APP_ID = 'id';
+var FACEBOOK_APP_SECRET = 'secret';
 //Authentication. (Passport)
 var passport = require('passport')
   , util = require('util')
@@ -92,6 +94,18 @@ passport.use(new GoogleStrategy({
     });
   }
 ));
+
+passport.use(new FacebookStrategy({
+    clientID: FACEBOOK_APP_ID,
+    clientSecret: FACEBOOK_APP_SECRET,
+    callbackURL: 'http://'+app.settings.dealit_host+':'+app.settings.dealit_port+'/auth/facebook/callback'
+  },
+  function(accessToken, refreshToken, profile, done) {   
+    console.log("Facebook profile :",profile); 
+    return done(null, profile);    
+  }
+));
+
 // Simple route middleware to ensure user is authenticated.
 //   Use this route middleware on any resource that needs to be protected.  If
 //   the request is authenticated (typically via a persistent login session),
@@ -133,6 +147,7 @@ app.get('/auth/google/return',
 
 app.get('/logout', function(req, res){
   req.logout();
+  req.session.destroy();
   res.redirect('/');
 });
 

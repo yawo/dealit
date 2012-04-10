@@ -16,7 +16,6 @@ var passport = require('passport')
   , TwitterStrategy = require('passport-twitter').Strategy
   , GitHubStrategy = require('passport-github').Strategy;
 
-
 passport.serializeUser(function(user, done) {
   done(null, user);
 });
@@ -82,8 +81,7 @@ passport.use(new GoogleStrategy({
   },
    function(identifier, profile, done) {
     // asynchronous verification, for effect...
-    process.nextTick(function () {
-      
+    process.nextTick(function () {      
       // To keep the example simple, the user's Google profile is returned to
       // represent the logged-in user.  In a typical application, you would want
       // to associate the Google account with a user record in your database,
@@ -94,6 +92,15 @@ passport.use(new GoogleStrategy({
     });
   }
 ));
+// Simple route middleware to ensure user is authenticated.
+//   Use this route middleware on any resource that needs to be protected.  If
+//   the request is authenticated (typically via a persistent login session),
+//   the request will proceed.  Otherwise, the user will be redirected to the
+//   login page.
+function ensureAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) { return next(); }
+  res.redirect('/login')
+}
 
 // GET /auth/google
 //   Use passport.authenticate() as route middleware to authenticate the
@@ -137,10 +144,10 @@ app.get('/users/:ids', function(req, res){
 });
 
 app.get('/login', function(req, res){
-    res.send("Login page here."+req.user);
+    res.send("<center style='margin-top:250px'><h3>Login page </h3> Here, we should provide many Auth Strategies</center>");
 });
 
-app.get('/', function(req, res){
+app.get('/',ensureAuthenticated, function(req, res){
   name = (req.user)?req.user.displayName:'Anonymous';
   res.send('Hello ' +name);	
   req.session.currentUser=req.user;

@@ -67,7 +67,7 @@ var certificate = "-----BEGIN CERTIFICATE-----\n"+
 "AS2COvzkTpdNgTjI9XYYjfT9vX/n6+rFNClNgQo+JJREWV906ForaLpzul4HZLHD\n"+
 "5w5puJl89iAEykfP1rBn2h/JN5KmkjLLK6GlB+zZlBTQ\n"+
 "-----END CERTIFICATE-----";
-
+var routes = require('./routes');
 //var credentials = crypto.createCredentials({key: privateKey, cert: certificate});
 
 
@@ -106,25 +106,27 @@ var express =  require('express');
 
 //minified main Css file
 var cssContent="";
+var less = require('less');
+var lessFilePath = "./public/style.less";
+/*fs.readFile(lessFilePath, "utf8", function(err, data) {
+  //console.log("css is : ",data);
+  if(data)
+    less.render(data, function (e, css) {
+      cssContent=css;
+      //console.log("Less :",css);
+  });
+});
+
+*/
+  //
+
 
 
 //Create The login page
-var loginPage="<center style='margin-top:250px'><h3>Login page </h3> Here, we should provide many Auth Strategies</center>";
+var loginPage="login";
 
 //Create the Index Page
-var indexPage="";
-
-
-
-
-
-
-
-
-
-
-
-
+var indexPage="index";
 
 
 
@@ -132,6 +134,8 @@ var indexPage="";
 var register = function(app,appPort,redisLocalPort,redisProdPort,secure){
 var protocol = (secure)?"https":"http";
 //Config.
+var pub_dir = __dirname + '/public';
+console.log("pub_dir",pub_dir);
 app.configure(function(){  
   app.set('delait_protocol',protocol);
   app.use(express.methodOverride());
@@ -139,9 +143,15 @@ app.configure(function(){
   app.use(express.cookieParser());  
   app.use(express.session({ secret: 'keyboard cat' }));
   app.use(passport.initialize());
-  app.use(passport.session());  
-   app.use(app.router);
-  app.use(express.static(__dirname + '/../../public'));
+  app.use(passport.session());    
+  app.set('views', __dirname + '/views');
+    app.set('view engine', 'jade');
+  app.use(express.compiler({ src: pub_dir, enable: ['less']}));
+
+  //app.use("/styles", express.static(pub_dir + '/styles')); 
+  app.use(app.router);
+  app.use(express.static(pub_dir));
+
   
 });
 
@@ -308,12 +318,13 @@ app.get('/users/:ids', function(req, res){
 });
 
 app.get('/login', function(req, res){
-    res.send(loginPage);
+  res.render(loginPage, { user: req.user,title: 'Dealit' });    
 });
 
 app.get('/',ensureAuthenticated, function(req, res){
   name = (req.user)?(req.user.displayName||req.user||'Me'):'Anonymous';
-  res.send(indexPage);	//give name in parameter.'Hello ' +name
+  //res.send(indexPage);	//give name in parameter.'Hello ' +name
+  res.render(indexPage, { user: req.user, title: 'Dealit', user : name});
   req.session.currentUser=req.user;
 }); 
 

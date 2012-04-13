@@ -131,7 +131,7 @@ app.configure('production', function(){
   var oneYear = 31557600000;
   app.use(express.static(__dirname + '/public', { maxAge: oneYear }));
   app.use(express.errorHandler());  
-  app.set('dealit_host','dealit.cloudeno.de');
+  app.set('dealit_host','dealit.cloudno.de');
   app.set('dealit_host_validUrl','dealit.cloudeno.de');
   app.set('dealit_port',80);
   app.set('redis_port',redisProdPort);

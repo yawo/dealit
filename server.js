@@ -100,6 +100,35 @@ passport.deserializeUser(function(obj, done) {
 
 var express =  require('express');
 
+
+
+//Front Office...
+
+//minified main Css file
+var cssContent="";
+
+
+//Create The login page
+var loginPage="<center style='margin-top:250px'><h3>Login page </h3> Here, we should provide many Auth Strategies</center>";
+
+//Create the Index Page
+var indexPage="";
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//APP Server Initialisation.
 var register = function(app,appPort,redisLocalPort,redisProdPort,secure){
 var protocol = (secure)?"https":"http";
 //Config.
@@ -279,12 +308,12 @@ app.get('/users/:ids', function(req, res){
 });
 
 app.get('/login', function(req, res){
-    res.send("<center style='margin-top:250px'><h3>Login page </h3> Here, we should provide many Auth Strategies</center>");
+    res.send(loginPage);
 });
 
 app.get('/',ensureAuthenticated, function(req, res){
-  name = (req.user)?(req.user.displayName||req.user):'Anonymous';
-  res.send('Hello ' +name);	
+  name = (req.user)?(req.user.displayName||req.user||'Me'):'Anonymous';
+  res.send(indexPage);	//give name in parameter.'Hello ' +name
   req.session.currentUser=req.user;
 }); 
 
@@ -425,3 +454,5 @@ function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) { return next(); }
   res.redirect('/login')
 }
+
+

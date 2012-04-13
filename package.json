@@ -1,0 +1,21 @@
+{
+  "name": "dealit",
+  "version": "0.0.1",
+  "dependencies": {
+    "express": "2.5.9",
+    "passport":">= 0.0.1",
+    "passport-facebook":">= 0.0.1",
+    "passport-github":">= 0.0.1",
+    "passport-google":">= 0.0.1",
+    "passport-yahoo":">= 0.0.1",
+    "passport-windowslive":">= 0.0.1",
+    "passport-linkedin":">= 0.0.1",
+    "passport-local":">= 0.0.1",
+    "passport-twitter":">= 0.0.1",
+	"passport-tumblr":">= 0.0.1",
+	"passport-tumblr":">= 0.0.1",
+    "redis":">= 0.0.1",
+	"jade":">= 0.0.1",
+	"less":">= 0.0.1"
+  }
+}

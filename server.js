@@ -24,8 +24,8 @@ var productionLINKEDIN_APP_SECRET = 'G2846x0c0iISx4Cn';
 
 var developmentTUMBLR_APP_ID = 'CkxN7oAtEUqMH8sbwolZFMCtWshDbTiTW8y4PdHnOc5Hhg6aUq'; 
 var developmentTUMBLR_APP_SECRET = 'kqydcLFkAjCtjS0mnPFx0Qj3st0InnL4msFE6n89GBDdoUNPLw';
-var productionTUMBLR_APP_ID = 'CkxN7oAtEUqMH8sbwolZFMCtWshDbTiTW8y4PdHnOc5Hhg6aUq'; //for cloudNode
-var productionTUMBLR_APP_SECRET = 'kqydcLFkAjCtjS0mnPFx0Qj3st0InnL4msFE6n89GBDdoUNPLw';
+var productionTUMBLR_APP_ID = '56nBkji6TxlNjeabGAGbkSZoriAa7tA9rcqxmcy4hNMGeRs6co'; //for cloudNode
+var productionTUMBLR_APP_SECRET = 'esGAJnVenpljjkYUSnbMOsywZl9mj8OdyQSgzft8CixeFaTsFW';
 
 
 var developmentGITHUB_APP_ID = '91684fc313c9a42cd0fd';
@@ -132,7 +132,7 @@ app.configure('production', function(){
   app.use(express.static(__dirname + '/public', { maxAge: oneYear }));
   app.use(express.errorHandler());  
   app.set('dealit_host','dealit.cloudno.de');
-  app.set('dealit_host_validUrl','dealit.cloudeno.de');
+  app.set('dealit_host_validUrl','dealit.cloudno.de');
   app.set('dealit_port',80);
   app.set('redis_port',redisProdPort);
   app.set('redis_auth','0c9f2bc6e1565a3c1463052b6f3b7d53');  
